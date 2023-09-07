@@ -1,0 +1,46 @@
+body {
+   font: 1em/1.618 Inter, sans-serif;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   
+   min-height: 100vh;
+   padding: 30px;
+   
+   color: #224;
+   background:
+   url(https://c1.wallpaperflare.com/path/979/577/205/guitar-instrument-music-room-dde41b27ea9b3f538933743cac7063ac.jpg)
+   center / cover no-repeat fixed;
+  }
+  
+.card {
+   max-width: 300px;
+   min-height: 350px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+
+   max-width: 600px;
+   padding: 35px;
+
+   border: 1px solid rgba(255, 255, 255, .25);
+   border-radius: 20px;
+   background-color: rgba(255, 255, 255, 0.45);
+   box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+   
+   backdrop-filter: blur(15px);
+   color: black;
+  }
+
+.message{
+   position: absolute;
+   top: 1.5rem;
+   margin:0 auto;
+   align-items: center;
+   z-index: 10000;
+}
+
+.toast-body{
+   transform: translateY(5px);
+}

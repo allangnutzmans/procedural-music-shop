@@ -8,28 +8,16 @@
     <title>Toast</title>
 </head>
 <body>
-<script src="scripts.js"></script>
-  <div class="toast show">
-    <div class="toast-header">
-      <strong class="me-auto">Toast Header</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-    </div>
-    <div class="toast-body">
-      <p>Some text inside the toast body</p>
-    </div>
-  </div>
-</div>
-<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="toast-header">
-    <img src="..." class="rounded me-2" alt="...">
-    <strong class="me-auto">Bootstrap</strong>
-    <small class="text-body-secondary">Just now</small>
-    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-  <div class="toast-body">
-    .$message.
-  </div>
-</div>
 
+<script src="scripts.js"></script>
+<button >Click me</button>
+<div class="toast show align-items-center text-bg-primary border-0 top-0 start-50 translate-middle-x" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div class="toast-body">
+        .$message.
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
 </body>
 </html>
