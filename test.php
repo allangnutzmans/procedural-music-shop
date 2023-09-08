@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <title>Login</title>
+</head>
 <?php
 
     require 'config.php';
@@ -11,22 +21,19 @@
 
         $query = "SELECT * FROM user WHERE email = '$email' AND password = '$pass'" or die('query failed');
         $find_user = mysqli_query($conn, $query);
-        
+
         if(mysqli_num_rows($find_user) > 0){
             if($email == 'psr@admin.com'){
-                $row = mysqli_fetch_assoc($find_user);
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user'] = $row['email'];
-                $_SESSION['fname'] = $row['first_name'];
-                $_SESSION['lname'] = $row['last_name'];
-                header('location:adm_master.php');
+                header('location:adm.php');
             }else{
                 $row = mysqli_fetch_assoc($find_user);
+
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user'] = $row['email'];
-                $_SESSION['fname'] = $row['first_name'];
-                $_SESSION['lname'] = $row['last_name'];
+                $_SESSION['fname'] = $row['fname'];
+                $_SESSION['lname'] = $row['lname'];
                 $_SESSION['password'] = $row['password'];
+
                 header('location:home.php');
             }
 
@@ -37,16 +44,7 @@
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/styles/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <title>Login</title>
-</head>
+
 <body>
 <?php
         if(isset($message)){
