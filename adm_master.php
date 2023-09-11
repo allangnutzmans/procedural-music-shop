@@ -1,5 +1,5 @@
 <?php
-    require 'config.php';
+    require_once 'config.php';
 
     session_start();
 
@@ -16,7 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/assets/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/styles/admin.css">
@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <a class="nav-link link-body-emphasis" aria-current="page" href="adm_dashboard.php">Dashboard</a>
-                <a class="nav-link link-body-emphasis" href="?page=trip">Products</a>
+                <a class="nav-link link-body-emphasis" href="adm_products.php">Products</a>
                 <a class="nav-link link-body-emphasis" href="?page=instruments">Artists</a>
                 <a class="nav-link link-body-emphasis" href="?page=pro">Pro Sound</a>
                 <a class="nav-link link-body-emphasis" href="?page=news">Top Offers</a>
@@ -48,4 +48,5 @@
     </div>
 </nav>
 </header>
+
 

@@ -48,21 +48,11 @@
     <title>Login</title>
 </head>
 <body>
+<div class="toast show align-items-center text-bg-primary border-0 message" role="alert" aria-live="assertive" aria-atomic="true">
 <?php
-        if(isset($message)){
-            foreach($message as $msg){
-                echo 
-                    '<div class="toast show align-items-center text-bg-primary border-0 message" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                        <div class="toast-body"><h6>'
-                            .$msg.
-                        '</h6></div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                        </div>
-                    </div>';
-            }
-        }
+        displayMessages($message);
     ?>
+</div>
     <div class="contaier m-5 p-5">
         <div class="card">
             <h1 class="text-center">Login</h1>
