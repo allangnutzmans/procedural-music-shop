@@ -1,8 +1,11 @@
 <?php
 
     require_once 'adm_master.php';  
-
-    //ADD PRODUCT
+?>
+<h1 class="text-center mt-5">Products</h1>
+<div>
+    <?php
+//ADD PRODUCT
     if(isset($_POST['add_product'])){
         $guitar_name = mysqli_real_escape_string($conn, $_POST['guitar_name']);
         $brand = mysqli_real_escape_string($conn, $_POST['brand']);
@@ -16,12 +19,14 @@
         $query = mysqli_query($conn, "SELECT guitar_name FROM products WHERE guitar_name = '$guitar_name'") or die('query failed');
 
         if(mysqli_num_rows($query) > 0){   
-            $message[] = 'product alerady added!';
+            $warning[] = 'product already added!';
+            displayWarning($warning);
         }else{
             //insert the data
             $query = "INSERT INTO products(guitar_name, brand, model, body_material, body_shape, price, description) VALUES ('$guitar_name', '$brand', '$model', '$body_material', '$body_shape', '$price', '$description')";
-
             mysqli_query($conn, $query) or die('query failed');
+            $message[] = 'product added!';
+            displayMessages($message);
         }
     }
 
@@ -31,13 +36,11 @@
         $fetch_name = mysqli_fetch_assoc($select_id);
         $product_name = $fetch_name['guitar_name'];
         mysqli_query($conn, "DELETE FROM products WHERE id = '$id'") or die("query failed");
-        $warning[] = "Deleted $product_name";
-
-        
+        $warning[] = "Deleted $product_name"; //not working
+        header('location:adm_products.php');
     }
-?>
-<h1 class="text-center mt-5">Products</h1>
-<div><?php displayMessages($message) ?></div>
+    ?>
+</div>
 <div class="edit">
 
 </div>

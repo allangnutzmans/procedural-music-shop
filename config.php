@@ -23,7 +23,7 @@
         foreach($warning as $msg){
             echo 
                 '
-                    <div class="toast show text-bg-primary border-0 message" role="alert" aria-live="assertive" aria-atomic="true" style="background-color: red;">
+                    <div class="toast show text-bg-danger border-0 message" role="alert" aria-live="assertive" aria-atomic="true"">
                         <div class="d-flex">
                             <div class="toast-body">
                                 <h6>'.$msg.'</h6>
