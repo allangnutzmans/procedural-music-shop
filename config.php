@@ -2,7 +2,7 @@
 
     $conn = mysqli_connect('localhost', 'root', '', 'shop_db') or die('connection failed');
 
-    $message = [];
+    $message = array();
     function displayMessages($message){
             foreach($message as $msg){
                 echo 
@@ -18,7 +18,7 @@
                     ';
         }
     }
-    $warning = [];
+    $warning = array();
     function displayWarning($warning){
         foreach($warning as $msg){
             echo 
@@ -33,5 +33,5 @@
                  </div>    
                 ';
     }
-}    
+}
 ?>
