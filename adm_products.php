@@ -11,13 +11,27 @@
         $price = $_POST['price'];
         $description = mysqli_real_escape_string($conn, $_POST['description']);
 
+        $image = $_FILES['image']['name'];
+        $image_size = $_FILES['image']['size'];
+        $image_tmp_name = $_FILES['image']['tmp_name'];
+        $image_folder = 'assets/uploaded_img/'.$image;
+
         $query_check = mysqli_query($conn, "SELECT * FROM products WHERE guitar_name = '$guitar_name'") or die('query failed');
 
         if(mysqli_num_rows($query_check) > 0){
-            $warning[] = 'Product already added!';
+            $warning[] = 'Product name already added!';
         }else{
-            mysqli_query($conn, "INSERT INTO products(guitar_name, brand, model, body_material, body_shape, price, description) VALUES('$guitar_name', '$brand', '$model', '$body_material', '$body_shape', '$price', '$description')") or die('query failed');
-            $message[] = 'Product successfully added!';
+            $query = mysqli_query($conn, "INSERT INTO products(guitar_name, brand, model, body_material, body_shape, price, description, image) VALUES('$guitar_name', '$brand', '$model', '$body_material', '$body_shape', '$price', '$description', '$image')") or die('query failed');
+            if($query){
+                if($image_size > 2000000){
+                    $warnig[] = 'Image is too big.';
+                }else{
+                    move_uploaded_file($image_tmp_name, $image_folder);
+                    $message[] = 'Product successfully added!';
+                }
+            }else{
+                $warning[] = 'Product could not be added. Try Again.';
+            }
         }
     }
 
@@ -29,8 +43,6 @@
         $warning[] = 'Product delected!';
     }
 
-
-    //UPDATE
     //UPDATE
     if(isset($_POST['update_product'])){
         $up_id = $_POST['update_p_id'];
@@ -42,7 +54,23 @@
         $up_price = $_POST['up_price'];
         $up_description = $_POST['up_description'];
 
-        mysqli_query($conn, "UPDATE products SET guitar_name = '$up_product', brand = '$up_brand', model '$up_model', up_body_material= '$up_body_material', up_body_shape = '$up_body_shape', up_price = '$up_price', up_description = '$up_description' WHERE id = 'up_id'") or die('query failed');
+        $up_image = $_FILES['up_image']['name'];
+        $up_image_tmp_name = $_FILES['up_image']['tmp_name'];
+        $up_image_size = $_FILES['up_image']['size'];
+        $up_image_folder = 'assets/images/'.$up_image;
+        $old_image = $_FILES['old_image'];
+
+        
+        if(!empty($up_image)){
+            if($up_image_size > 2000000){
+                $warnig[] = 'Image is too big';
+            }else{
+                mysqli_query($conn, "UPDATE products SET guitar_name = '$up_product', brand = '$up_brand', model = '$up_model', body_material= '$up_body_material', body_shape = '$up_body_shape', price = '$up_price', description = '$up_description' WHERE id = '$up_id'") or die('query failed');
+
+                move_uploaded_file($up_image_folder, $up_image_tmp_name);
+                unlink('assets/images/'.$old_image);
+            }
+        }
 
         header('location:adm_products.php');
     }
@@ -63,7 +91,8 @@
     <button class="btn btn-success m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"><i class="fa-solid fa-circle-plus"></i><strong> New product</strong></button>
     <div class="collapse" id="collapseWidthExample">
         <div class="card-body" style="width: 100%;">
-            <form action="" class="row g-3" method="post">
+            <form action="" class="row g-3" method="post" enctype="multipart/form-data">
+
                 <div class="col-md-3">
                     <label for="text" class="form-label">Guitar name</label>
                     <input type="text" class="form-control" id="guitar" name="guitar_name" required>
@@ -87,8 +116,11 @@
                 <div class="col-md-2">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" class="form-control" step="0.01" name="price" required>
-                    </div>
-                
+                </div>
+                <div class="col-md-2">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" accept="image/jpg, image/jpeg, image/png" class="form-control" id="image" name="image" required>
+                </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
@@ -101,11 +133,7 @@
     </div> 
 </div>  
 </section>
-            </div>
-            </div>
-            </div>
-            </div>
-            <section class="contaier mx-5 px-5">
+<section class="contaier mx-5 px-5">
 <?php
     //UPDATE FORM
     if(isset($_GET['update'])){
@@ -114,8 +142,9 @@
         if(mysqli_num_rows($p_id_query) > 0){
             while($fetch_product = mysqli_fetch_assoc($p_id_query)){
 ?>
-            <form action="" class="row g-3" method="post">
-            <input type="hidden" name="update_p_id" value="<?php echo $product_id; ?>">
+            <form action="" class="row g-3" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="update_p_id" value="<?= $fetch_product['id']; ?>">
+            <input type="hidden" name="old_image" value="<?= $fetch_product['image'] ?>">
                 <div class="col-md-3">
                     <label for="text" class="form-label">Guitar name</label>
                     <input type="text" class="form-control" id="up_guitar" name="up_guitar_name" value="<?= $fetch_product['guitar_name']?>" required>
@@ -140,15 +169,19 @@
                     <label for="price" class="form-label">Price</label>
                     <input type="number" class="form-control" step="0.01" name="up_price" required  value="<?= $fetch_product['price']?>">
                     </div>
-                
+                <div class="col-md-2">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="file" class="box" name="up_image" accept="image/jpg, image/jpeg, image/png">
+                </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="up_description" name="up_description" rows="6" required  value="<?= $fetch_product['price']?>"></textarea>
+                    <textarea class="form-control" id="up_description" name="up_description" rows="6" required><?= $fetch_product['description']?></textarea>
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-warning m-2 col-md-1 text-center" name="update_product"><i class="fa-solid fa-circle-plus"></i><strong> Update product</strong></button>
                     &nbsp;
                     <button class="btn bt-danger" type="reset">Cancel</button>
+                    <!-- botao cancel -->
                 </div>
             </form>
 <?php
@@ -176,10 +209,19 @@
                     <td>Body Shape</td>
                     <td>Price</td>
                     <td>Description</td>
+                    <td>Image</td>
                     <td><i class="fa-solid fa-pen-to-square"></i> Edit</td>
                     <td><i class="fa-solid fa-trash" style="color: #ffffff;"></i> Delete</td>
                 </thead>
                 <tbody>';
+                function Img($img){
+                    if(is_string($img)){   
+                        return $img;
+                    }else{
+
+                        return 'No image';
+                    }
+                }
             while($fetch_product = mysqli_fetch_assoc($select_all)){
 ?>  
             <tr>
@@ -191,8 +233,9 @@
                 <td><?=$fetch_product['body_shape']?></td>
                 <td><?= number_format($fetch_product['price'], 2, ',', '.')?></td>
                 <td><?=$fetch_product['description']?></td>
+                <td><a href="/assets/images/<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
                 <td>
-                    <a href="adm_products.php?update=<?= $fetch_product['id'] ?>">
+                    <a href="adm_products.php?update=<?= $fetch_product['id'] //CHANGED?>">
                     <button type="button" class="btn btn-warning">
                         <i class="fa-solid fa-pen-to-square"></i> Edit
                     </button>
