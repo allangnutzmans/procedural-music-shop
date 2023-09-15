@@ -1,5 +1,5 @@
 <?php
-    require_once 'config.php';
+
     require_once 'adm_master.php';
 
     $select_users = mysqli_query($conn, "SELECT * FROM user") or die('connection failed');

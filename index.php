@@ -8,7 +8,7 @@
     if(!isset($user_id)) {
         header('location:login.php');
     }
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,3 +50,6 @@
         </div>
     </div>
 </nav>
+<?php
+
+?>

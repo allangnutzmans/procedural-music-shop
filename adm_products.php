@@ -14,23 +14,28 @@
         $image = $_FILES['image']['name'];
         $image_size = $_FILES['image']['size'];
         $image_tmp_name = $_FILES['image']['tmp_name'];
-        $image_folder = 'assets/uploaded_img/'.$image;
+        $image_folder = __DIR__.'assets/uploaded_img/'.$image;
 
         $query_check = mysqli_query($conn, "SELECT * FROM products WHERE guitar_name = '$guitar_name'") or die('query failed');
 
         if(mysqli_num_rows($query_check) > 0){
             $warning[] = 'Product name already added!';
+            displayWarning($warning);
         }else{
             $query = mysqli_query($conn, "INSERT INTO products(guitar_name, brand, model, body_material, body_shape, price, description, image) VALUES('$guitar_name', '$brand', '$model', '$body_material', '$body_shape', '$price', '$description', '$image')") or die('query failed');
+            
             if($query){
-                if($image_size > 2000000){
-                    $warnig[] = 'Image is too big.';
+                if($image_size > 2000000){  
+                    $warning[] = 'Image is too big.';
+                    displayWarning($warning);
                 }else{
                     move_uploaded_file($image_tmp_name, $image_folder);
-                    $message[] = 'Product successfully added!';
+                    $message[] = 'Product and image successfully added!';
+                    displayMessages($message);
                 }
             }else{
                 $warning[] = 'Product could not be added. Try Again.';
+                displayWarning($warning);
             }
         }
     }
@@ -38,9 +43,13 @@
     //DELETE PRODUCT
     if(isset($_GET['delete'])){
         $product_id = $_GET['delete'];
+        $delete_image_query = mysqli_query($conn, "SELECT image FROM products WHERE id = '$product_id'") or die('query failed');
+        $fetch_image = mysqli_fetch_assoc($delete_image_query);
+        unlink('assets/uploaded_img/'.$fetch_image['image']);
         mysqli_query($conn,"DELETE FROM products WHERE id = '$product_id'") or die('query failed');
         header('location:adm_products.php');
         $warning[] = 'Product delected!';
+        displayWarning($warning);
     }
 
     //UPDATE
@@ -57,85 +66,80 @@
         $up_image = $_FILES['up_image']['name'];
         $up_image_tmp_name = $_FILES['up_image']['tmp_name'];
         $up_image_size = $_FILES['up_image']['size'];
-        $up_image_folder = 'assets/images/'.$up_image;
+        $up_image_folder = 'assets/uploaded_img/'.$up_image;
         $old_image = $_FILES['old_image'];
 
-        
+        mysqli_query($conn, "UPDATE products SET guitar_name = '$up_product', brand = '$up_brand', model = '$up_model', body_material= '$up_body_material', body_shape = '$up_body_shape', price = '$up_price', description = '$up_description' WHERE id = '$up_id'") or die('query failed');
+
         if(!empty($up_image)){
             if($up_image_size > 2000000){
                 $warnig[] = 'Image is too big';
             }else{
-                mysqli_query($conn, "UPDATE products SET guitar_name = '$up_product', brand = '$up_brand', model = '$up_model', body_material= '$up_body_material', body_shape = '$up_body_shape', price = '$up_price', description = '$up_description' WHERE id = '$up_id'") or die('query failed');
-
-                move_uploaded_file($up_image_folder, $up_image_tmp_name);
-                unlink('assets/images/'.$old_image);
+                mysqli_query($conn, "UPDATE products SET image = '$up_image' WHERE id = $up_id") or die('query failed');
+                move_uploaded_file($up_image_tmp_name, $up_image_folder);
+                unlink('assets/uploaded_img/'.$old_image);
             }
+        }else{
+            $delete_image_query = mysqli_query($conn, "SELECT image FROM products WHERE id = '$up_id'") or die('query failed');
+            $fetch_delete_image = mysqli_fetch_assoc($delete_image_query);
+            unlink('assets/uploaded_img/'.$old_image);
         }
 
         header('location:adm_products.php');
     }
 ?>
 <h1 class="text-center mt-5">Products</h1>
-    <div>
-        <?php
-                if(isset($message)){
-                    displayMessages($message);
-                }elseif(isset($warnig)){
-                    displayWarning($warnig);
-                }
-            ?>  
-    </div>    
 
-<section class="add-product">
-<div class="contaier mx-5 p-5">
-    <button class="btn btn-success m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"><i class="fa-solid fa-circle-plus"></i><strong> New product</strong></button>
-    <div class="collapse" id="collapseWidthExample">
-        <div class="card-body" style="width: 100%;">
-            <form action="" class="row g-3" method="post" enctype="multipart/form-data">
+    <section class="add-product">
+    <div class="contaier mx-5 p-5">
+        <button class="btn btn-success m-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"><i class="fa-solid fa-circle-plus"></i><strong> New product</strong></button>
+        <div class="collapse" id="collapseWidthExample">
+            <div class="card-body" style="width: 100%;">
+                <form action="" class="row g-3" method="post" enctype="multipart/form-data">
 
-                <div class="col-md-3">
-                    <label for="text" class="form-label">Guitar name</label>
-                    <input type="text" class="form-control" id="guitar" name="guitar_name" required>
-                </div>
-                <div class="col-md-3">
-                    <label for="text" class="form-label">Brand</label>
-                    <input type="text" class="form-control" id="brand" name="brand" required>
-                </div>
-                <div class="col-3">
-                    <label for="model" class="form-label">Model</label>
-                    <input type="text" class="form-control" name="model" id="model" placeholder="Stratocaster, Telecaster, Flying V..." required>
-                </div>
-                <div class="col-md-3">
-                    <label for="body_m" class="form-label">Body Material</label>
-                    <input type="text" class="form-control" name="body_material" id="body_m" required>
-                </div>
-                <div class="col-md-3">
-                     <label for="shape" class="form-label">Body Shape</label>
-                    <input type="text" class="form-control" name="body_shape" id="shape" required>
-                </div>
-                <div class="col-md-2">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" class="form-control" step="0.01" name="price" required>
-                </div>
-                <div class="col-md-2">
-                    <label for="image" class="form-label">Image</label>
-                    <input type="file" accept="image/jpg, image/jpeg, image/png" class="form-control" id="image" name="image" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
-                </div>
-                <div class="row">
-                    <button type="submit" class="btn btn-success m-2 col-md-1 text-center" value="add product" name="add_product" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"><i class="fa-solid fa-circle-plus"></i><strong> Add product</strong></button>
-                </div>
-            </form>
-        </div>    
-    </div> 
-</div>  
+                    <div class="col-md-3">
+                        <label for="text" class="form-label">Guitar name</label>
+                        <input type="text" class="form-control" id="guitar" name="guitar_name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="text" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="brand" name="brand" required>
+                    </div>
+                    <div class="col-3">
+                        <label for="model" class="form-label">Model</label>
+                        <input type="text" class="form-control" name="model" id="model" placeholder="Stratocaster, Telecaster, Flying V..." required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="body_m" class="form-label">Body Material</label>
+                        <input type="text" class="form-control" name="body_material" id="body_m" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="shape" class="form-label">Body Shape</label>
+                        <input type="text" class="form-control" name="body_shape" id="shape" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" step="0.01" name="price" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="image" class="form-label">Image</label>
+                        <input type="file" accept="image/jpg, image/jpeg, image/png" class="form-control" id="image" name="image" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="6" required></textarea>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-success m-2 col-md-1 text-center" value="add_product" name="add_product" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample"><i class="fa-solid fa-circle-plus"></i><strong> Add product</strong></button>
+                    </div>
+                </form>
+            </div>    
+        </div> 
+    </div>  
 </section>
 <section class="contaier mx-5 px-5">
 <?php
-    //UPDATE FORM
+    //UPDATE FORM//
     if(isset($_GET['update'])){
         $product_id = $_GET['update'];
         $p_id_query = mysqli_query($conn, "SELECT * FROM products WHERE id = '$product_id'") or die('query failed');
@@ -171,23 +175,23 @@
                     </div>
                 <div class="col-md-2">
                     <label for="image" class="form-label">Image</label>
-                    <input type="file" class="box" name="up_image" accept="image/jpg, image/jpeg, image/png">
+                    <input type="file" class="box" name="up_image" accept="image/jpg, image/jpeg, image/png" required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="up_description" name="up_description" rows="6" required><?= $fetch_product['description']?></textarea>
                 </div>
                 <div class="row">
-                    <button type="submit" class="btn btn-warning m-2 col-md-1 text-center" name="update_product"><i class="fa-solid fa-circle-plus"></i><strong> Update product</strong></button>
-                    &nbsp;
-                    <button class="btn bt-danger" type="reset">Cancel</button>
-                    <!-- botao cancel -->
+                    <button type="submit" class="btn btn-warning m-2 col-md-2 text-center" value="update_product" name="update_product">
+                        <i class="fa-solid fa-circle-plus"></i><strong> Update product</strong>
+                    </button>
                 </div>
             </form>
 <?php
             }
         }  
     }
+    
 ?>
 </section>
 
@@ -233,9 +237,9 @@
                 <td><?=$fetch_product['body_shape']?></td>
                 <td><?= number_format($fetch_product['price'], 2, ',', '.')?></td>
                 <td><?=$fetch_product['description']?></td>
-                <td><a href="/assets/images/<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
+                <td><a href="/assets/uploaded_img/<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
                 <td>
-                    <a href="adm_products.php?update=<?= $fetch_product['id'] //CHANGED?>">
+                    <a href="adm_products.php?update=<?= $fetch_product['id']?>">
                     <button type="button" class="btn btn-warning">
                         <i class="fa-solid fa-pen-to-square"></i> Edit
                     </button>

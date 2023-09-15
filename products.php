@@ -23,7 +23,6 @@
                 <br><br>
                 <div class="card-text">
                     <img src="/assets/images/<?=$fetch_products['image'] ?>" alt="">
-                    
                 </div>
                 <br>
                 <p>Model: <?= $fetch_products['model']?></p>
@@ -31,7 +30,7 @@
             </div>
         </div>
 <?php
-endwhile;
+        endwhile;
 ?>
 
 </div>
