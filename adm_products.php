@@ -232,7 +232,7 @@
                         return $img;
                     }else{
 
-                        return 'No image';
+                        return '';
                     }
                 }
             while($fetch_product = mysqli_fetch_assoc($select_all)){
@@ -246,7 +246,7 @@
                 <td><?=$fetch_product['body_shape']?></td>
                 <td>$ <?= number_format($fetch_product['price'], 2, ',', '.')?></td>
                 <td><?=$fetch_product['description']?></td>
-                <td><a href="/assets/uploaded_img/<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
+                <td><a href="<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
                 <td>
                     <a href="adm_products.php?update=<?= $fetch_product['id']?>">
                     <button type="button" class="btn btn-warning">
