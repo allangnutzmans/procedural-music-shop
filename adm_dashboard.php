@@ -23,7 +23,7 @@
   </div>
   <div class="card text-center mb-3 col m-2" style="width: 18rem;">
     <div class="card-body">
-      <h2 class="card-title">Number of users</h2>
+      <h2 class="card-title">Number of products</h2>
       <br><br>
       <?php
           $n_of_users = mysqli_num_rows($select_products);
