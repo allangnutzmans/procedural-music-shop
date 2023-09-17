@@ -14,7 +14,7 @@
         $image = $_FILES['image']['name'];
         $image_size = $_FILES['image']['size'];
         $image_tmp_name = $_FILES['image']['tmp_name'];
-        $image_folder = __DIR__.'assets/uploaded_img/'.$image;
+        $image_folder = 'assets/uploaded_img/'.$image;  
 
         $query_check = mysqli_query($conn, "SELECT * FROM products WHERE guitar_name = '$guitar_name'") or die('query failed');
 
@@ -30,6 +30,7 @@
                     displayWarning($warning);
                 }else{
                     move_uploaded_file($image_tmp_name, $image_folder);
+                    var_dump(move_uploaded_file($image_tmp_name, $image_folder));
                     $message[] = 'Product and image successfully added!';
                     displayMessages($message);
                 }
@@ -138,6 +139,8 @@
     </div>  
 </section>
 <section class="contaier mx-5 px-5">
+
+
 <?php
     //UPDATE FORM//
     if(isset($_GET['update'])){
@@ -146,9 +149,11 @@
         if(mysqli_num_rows($p_id_query) > 0){
             while($fetch_product = mysqli_fetch_assoc($p_id_query)){
 ?>
-            <form action="" class="row g-3" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="update_p_id" value="<?= $fetch_product['id']; ?>">
-            <input type="hidden" name="old_image" value="<?= $fetch_product['image'] ?>">
+           
+        <form action="" class="row g-3" method="post" enctype="multipart/form-data"> 
+
+                <input type="hidden" name="update_p_id" value="<?= $fetch_product['id']; ?>">
+                <input type="hidden" name="old_image" value="<?= $fetch_product['image'] ?>">
                 <div class="col-md-3">
                     <label for="text" class="form-label">Guitar name</label>
                     <input type="text" class="form-control" id="up_guitar" name="up_guitar_name" value="<?= $fetch_product['guitar_name']?>" required>
@@ -161,6 +166,7 @@
                     <label for="model" class="form-label">Model</label>
                     <input type="text" class="form-control" name="up_model" id="up_model"  value="<?= $fetch_product['model']?>" required>
                 </div>
+                
                 <div class="col-md-3">
                     <label for="body_m" class="form-label">Body Material</label>
                     <input type="text" class="form-control" name="up_body_material" id="up_body_m"  value="<?= $fetch_product['body_material']?>" required>
@@ -177,14 +183,17 @@
                     <label for="image" class="form-label">Image</label>
                     <input type="file" class="box" name="up_image" accept="image/jpg, image/jpeg, image/png" required>
                 </div>
-                <div class="mb-3">
+                <div class="row">
+                <div class="col-10">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="up_description" name="up_description" rows="6" required><?= $fetch_product['description']?></textarea>
                 </div>
-                <div class="row">
-                    <button type="submit" class="btn btn-warning m-2 col-md-2 text-center" value="update_product" name="update_product">
+                <img class="col-2 img-thumbnail float-end" src="assets/uploaded_img/<?= $fetch_product['image'] ?>" alt=""> 
+                <div class="">
+                    <button type="submit" class="btn btn-warning text-center" value="update_product" name="update_product">
                         <i class="fa-solid fa-circle-plus"></i><strong> Update product</strong>
                     </button>
+                </div>
                 </div>
             </form>
 <?php
@@ -235,7 +244,7 @@
                 <td><?=$fetch_product['model']?></td>
                 <td><?=$fetch_product['body_material']?></td>
                 <td><?=$fetch_product['body_shape']?></td>
-                <td><?= number_format($fetch_product['price'], 2, ',', '.')?></td>
+                <td>$ <?= number_format($fetch_product['price'], 2, ',', '.')?></td>
                 <td><?=$fetch_product['description']?></td>
                 <td><a href="/assets/uploaded_img/<?= Img($fetch_product['image'])?>"><?= Img($fetch_product['image'])?></a></td>
                 <td>
