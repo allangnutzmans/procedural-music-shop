@@ -32,7 +32,7 @@ if(isset($_GET['delete'])){
     
     <h1 class="text-center mt-5">Placed orders</h1>
 
-    <div class="contaier mx-5 p-5">
+    <div class="contaier-fluid mx-5 p-5">
                 <?php
 
                 $select_orders = mysqli_query($conn, "SELECT * FROM orders")  or die('query failed');
@@ -56,23 +56,24 @@ if(isset($_GET['delete'])){
                             
                             <form action="" method="post">
                                 <input type="hidden" name="order_id" value="<?= $fetch_orders['id'] ?>">
-                                <select name="update_payment">
+                                <select class="form-select" name="update_payment">
                                     <option value="" selected disabled ><?= $fetch_orders['payment_status'] ?></option>
                                     <option value="pending">pending</option>
                                     <option value="complete">complete</option>
                                 </select>
+                                <br>
                                 <input type="submit" value="Update" name="update_order" class="btn btn-warning text-center">
                                 <a href="adm_orders.php?delete=<?=$fetch_orders['id']?>" onclick="return confirm('delete this order?')" class="btn btn-danger text-center">Delete</a>
                             </form>
                         </div>
                     </div>
+                </div>    
                     <?php
                     endwhile;
                 }else{
                     echo '<h2 class="text-center">No orders placed yet.</h2>';
                 }
                 ?>
-                </div>
-
+    </div>
 
 </section>

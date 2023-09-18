@@ -22,7 +22,6 @@
     <title>Store Play</title>
 </head>
 <body>
-<header>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="adm_master.php">PSR ADMIN</a>
@@ -45,5 +44,5 @@
         </div>
     </div>
 </nav>
-</header>
+
 
