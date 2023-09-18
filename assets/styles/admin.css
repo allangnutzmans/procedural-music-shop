@@ -25,6 +25,11 @@ body {
     backdrop-filter: blur(15px);
     color: black;
    }
+  #black {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: rgb(255, 255, 255);
+  }
+
 
    h1 {
     color: rgb(255, 255, 255);

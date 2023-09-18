@@ -33,7 +33,7 @@
                 <a class="nav-link link-body-emphasis" aria-current="page" href="adm_dashboard.php">Dashboard</a>
                 <a class="nav-link link-body-emphasis" href="adm_products.php">Products</a>
                 <a class="nav-link link-body-emphasis" href="adm_orders.php">Orders</a>
-                <a class="nav-link link-body-emphasis" href="?page=pro">Pro Sound</a>
+                <a class="nav-link link-body-emphasis" href="adm_users.php">Users</a>
                 <a class="nav-link link-body-emphasis" href="?page=news">Top Offers</a>
                 <a class="nav-link link-body-emphasis" href="?page=corporate">Corporate Sell</a>
                 <a class="nav-link link-body-emphasis" href="?page=fender">Fender</a>

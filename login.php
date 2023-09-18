@@ -11,16 +11,18 @@
 
         $query = "SELECT * FROM user WHERE email = '$email' AND password = '$pass'" or die('query failed');
         $find_user = mysqli_query($conn, $query);
+        $user = mysqli_fetch_assoc($find_user);
         
         if(mysqli_num_rows($find_user) > 0){
-            if($email == 'psr@admin.com'){
-                $row = mysqli_fetch_assoc($find_user);
+            
+            if($user['user_type'] == 'admin' ){
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user'] = $row['email'];
                 $_SESSION['fname'] = $row['first_name'];
                 $_SESSION['lname'] = $row['last_name'];
                 header('location:adm_master.php');
-            }else{
+                
+            }elseif($user['user_type' == 'user']){
                 $row = mysqli_fetch_assoc($find_user);
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user'] = $row['email'];
