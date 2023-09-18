@@ -33,7 +33,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <a class="nav-link link-body-emphasis" aria-current="page" href="adm_dashboard.php">Dashboard</a>
                 <a class="nav-link link-body-emphasis" href="adm_products.php">Products</a>
-                <a class="nav-link link-body-emphasis" href="?page=instruments">Artists</a>
+                <a class="nav-link link-body-emphasis" href="adm_orders.php">Orders</a>
                 <a class="nav-link link-body-emphasis" href="?page=pro">Pro Sound</a>
                 <a class="nav-link link-body-emphasis" href="?page=news">Top Offers</a>
                 <a class="nav-link link-body-emphasis" href="?page=corporate">Corporate Sell</a>
