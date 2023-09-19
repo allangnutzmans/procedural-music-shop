@@ -26,7 +26,9 @@
       }
     }
 
-    $select_orders = mysqli_query($conn, "SELECT * FROM orders")
+    $select_orders = mysqli_query($conn, "SELECT * FROM orders");
+
+    $select_messages = mysqli_query($conn, "SELECT * FROM message");
 ?>
 <h1 class="text-center mt-5">Dashboard</h1> 
 <div class="contaier text-center mx-5 p-5">
@@ -95,10 +97,10 @@
     <div class="card-body">
       <h2 class="card-title">Messages</h2>
       <?php
-        //$n_orders = mysqli_num_rows($select_orders);
+        $n_messages = mysqli_num_rows($select_messages)
       ?>
       <br><br>
-      <h2 class="card-text"><?= 1//$n_orders?></h2>
+      <h2 class="card-text"><?= $n_messages ?></h2>
       <br>
       <p>new messages</p>
     </div>    

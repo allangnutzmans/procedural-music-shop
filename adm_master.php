@@ -34,7 +34,7 @@
                 <a class="nav-link link-body-emphasis" href="adm_products.php">Products</a>
                 <a class="nav-link link-body-emphasis" href="adm_orders.php">Orders</a>
                 <a class="nav-link link-body-emphasis" href="adm_users.php">Users</a>
-                <a class="nav-link link-body-emphasis" href="?page=news">Top Offers</a>
+                <a class="nav-link link-body-emphasis" href="adm_contacts.php">Messages</a>
                 <a class="nav-link link-body-emphasis" href="?page=corporate">Corporate Sell</a>
                 <a class="nav-link link-body-emphasis" href="?page=fender">Fender</a>
             </ul>

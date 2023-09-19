@@ -28,8 +28,6 @@
                 $_SESSION['fname'] = $user['first_name'];
                 $_SESSION['lname'] = $user['last_name'];
                 $_SESSION['password'] = $user['password'];
-                var_dump($_SESSION);
-                exit;
                 header('location:home.php');
             }
 
