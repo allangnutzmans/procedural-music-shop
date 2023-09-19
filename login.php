@@ -14,21 +14,22 @@
         $user = mysqli_fetch_assoc($find_user);
         
         if(mysqli_num_rows($find_user) > 0){
-            
+
             if($user['user_type'] == 'admin' ){
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user'] = $row['email'];
-                $_SESSION['fname'] = $row['first_name'];
-                $_SESSION['lname'] = $row['last_name'];
-                header('location:adm_master.php');
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user'] = $user['email'];
+                $_SESSION['fname'] = $user['first_name'];
+                $_SESSION['lname'] = $user['last_name'];
+                header('location:adm_dashboard.php');
                 
-            }elseif($user['user_type' == 'user']){
-                $row = mysqli_fetch_assoc($find_user);
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user'] = $row['email'];
-                $_SESSION['fname'] = $row['first_name'];
-                $_SESSION['lname'] = $row['last_name'];
-                $_SESSION['password'] = $row['password'];
+            }elseif($user['user_type'] == 'user'){
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user'] = $user['email'];
+                $_SESSION['fname'] = $user['first_name'];
+                $_SESSION['lname'] = $user['last_name'];
+                $_SESSION['password'] = $user['password'];
+                var_dump($_SESSION);
+                exit;
                 header('location:home.php');
             }
 

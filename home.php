@@ -3,7 +3,7 @@
 
     $select_users = mysqli_query($conn, "SELECT * FROM user") or die('connection failed');
 
-$select_products = mysqli_query($conn, "SELECT * FROM products") or die('conection failed');
+    $select_products = mysqli_query($conn, "SELECT * FROM products") or die('conection failed');
 ?>
 
 <h1 class="home">HOMEPAGE</h1>
