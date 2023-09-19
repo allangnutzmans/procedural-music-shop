@@ -53,3 +53,12 @@
   footer a{
     text-decoration: none;
   }
+
+  .message{
+    position: relative;
+    top: 1em;
+    margin:0 auto;
+    align-items: center;
+    z-index: 10000;
+  }
+  

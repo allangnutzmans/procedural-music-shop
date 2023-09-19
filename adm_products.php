@@ -48,7 +48,6 @@
         $fetch_image = mysqli_fetch_assoc($delete_image_query);
         unlink('assets/uploaded_img/'.$fetch_image['image']);
         mysqli_query($conn,"DELETE FROM products WHERE id = '$product_id'") or die('query failed');
-        header('location:adm_products.php');
         $warning[] = 'Product delected!';
         displayWarning($warning);
     }
@@ -75,6 +74,7 @@
         if(!empty($up_image)){
             if($up_image_size > 2000000){
                 $warnig[] = 'Image is too big';
+                displayWarning($warning);
             }else{
                 mysqli_query($conn, "UPDATE products SET image = '$up_image' WHERE id = $up_id") or die('query failed');
                 move_uploaded_file($up_image_tmp_name, $up_image_folder);
@@ -85,7 +85,6 @@
             $fetch_delete_image = mysqli_fetch_assoc($delete_image_query);
             unlink('assets/uploaded_img/'.$old_image);
         }
-
         header('location:adm_products.php');
     }
 ?>

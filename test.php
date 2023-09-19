@@ -11,3 +11,5 @@ $c = $a + $b;
 $d = 0;
 
 phpinfo();
+
+xdebug_info();

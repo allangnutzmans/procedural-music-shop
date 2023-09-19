@@ -18,7 +18,7 @@
                     ';
         }
     }
-    $warning = array();
+    $warning = [];
     function displayWarning($warning){
         foreach($warning as $msg){
             echo 

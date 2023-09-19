@@ -3,9 +3,6 @@
 
 require 'adm_master.php';
 
-session_start();
-
-
 if(isset($_POST['update_payment'])){
     $order_id = $_POST['order_id'];
     $update_payment = $_POST['update_payment'];

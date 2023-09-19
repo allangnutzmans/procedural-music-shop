@@ -18,10 +18,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/styles/admin.css">
-    <script src="assets/js/scripts.js"></script>
     <title>Store Play</title>
 </head>
 <body>
+<header>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="adm_master.php">PSR ADMIN</a>
@@ -35,8 +35,6 @@
                 <a class="nav-link link-body-emphasis" href="adm_orders.php">Orders</a>
                 <a class="nav-link link-body-emphasis" href="adm_users.php">Users</a>
                 <a class="nav-link link-body-emphasis" href="adm_contacts.php">Messages</a>
-                <a class="nav-link link-body-emphasis" href="?page=corporate">Corporate Sell</a>
-                <a class="nav-link link-body-emphasis" href="?page=fender">Fender</a>
             </ul>
             <div class="d-flex flex-row-reverse">
                     <a class="btn btn-dark p-2 login" href="logout.php" role="button">Logout</a>
@@ -44,5 +42,6 @@
         </div>
     </div>
 </nav>
+</header>
 
 
