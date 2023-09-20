@@ -42,6 +42,7 @@
                 <a class="nav-link link-body-emphasis" href="?page=news">Top Offers</a>
                 <a class="nav-link link-body-emphasis" href="?page=corporate">Corporate Sell</a>
                 <a class="nav-link link-body-emphasis" href="?page=fender">Fender</a>
+                <a class="nav-link link-body-emphasis" href="contact.php">Contact us</a>
             </ul>
             <div class="d-flex flex-row-reverse">
                     <a class="btn btn-dark p-2 login" href="logout.php" role="button">Logout</a>
